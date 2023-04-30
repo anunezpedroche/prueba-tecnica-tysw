@@ -13,11 +13,11 @@ Se deberán tener contemplado dos casos. En ellos, también se deberá mostrar u
 - Implementación de tests unitarios.
 
 
-- Lista de Personajes 
-- Hasta que no haya datos, mostrar loader
-- Al clickar en un personaje, desplegar detalle
-- Si el listado llega vacío, mostrar 'No hay datos'
-- Si hay error en la API. Mostrar mensaje 'Error en la llamada' (Da igual el motivo)
+- Lista de Personajes Hecho
+- Hasta que no haya datos, mostrar loader Hecho
+- Al clickar en un personaje, desplegar detalle Hecho
+- Si el listado llega vacío, mostrar 'No hay datos' Hecho
+- Si hay error en la API. Mostrar mensaje 'Error en la llamada' (Da igual el motivo) Hecho
 - Implementar test unitarios
 
 Notas

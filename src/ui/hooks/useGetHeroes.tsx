@@ -14,32 +14,64 @@ export function useGetHeroes() {
   ])
 
   const [heroesState, setHeroesState] = useState({
-    count: 0,
-    limit: 0,
-    offset: 0,
-    results: 0
+    count: 20,
+    limit: 20,
+    offset: 20,
+    total: 20,
+    loading: true,
+    apiError: false
   })
 
   const mapTo = useCallback((data: CharacterDataWrapper) => {
     return data
   }, [])
 
-  const getAllHeroes = async () => {
-    const heros = await getEntityUseCase<
-      CharacterDataWrapper,
-      CharacterDataWrapper,
-      any
-    >(
-      container,
-      {
-        url: `/characters?ts=1000&apikey=${import.meta.env.VITE_API_KEY}&hash=${
-          import.meta.env.VITE_HASH_KEY
-        }`
-      },
-      mapTo
-    )
-    addHeroes(heros.data?.data?.results as Character[])
-  }
+  const getAllHeroes = useCallback(
+    async (offset?: number) => {
+      console.log(offset, heroesState.loading)
+      if (heroes.length >= heroesState.total) return
+
+      let url = `/characters?ts=1000&apikey=${
+        import.meta.env.VITE_API_KEY
+      }&hash=${import.meta.env.VITE_HASH_KEY}`
+
+      if (offset) {
+        url += `&offset=${offset}`
+      }
+
+      const heros = await getEntityUseCase<
+        CharacterDataWrapper,
+        CharacterDataWrapper,
+        any
+      >(
+        container,
+        {
+          url: url
+        },
+        mapTo
+      )
+      if (heros.status === 200) {
+        addHeroes(heros.data?.data?.results as Character[])
+        setHeroesState((prev) => ({
+          ...prev,
+          loading: false,
+          apiError: false,
+          count: heros.data?.data?.count as number,
+          limit: heros.data?.data?.limit as number,
+          offset: heros.data?.data?.offset as number,
+          total: heros.data?.data?.total as number
+        }))
+      }
+      if (heros.status !== 200) {
+        setHeroesState((prev) => ({
+          ...prev,
+          loading: false,
+          apiError: true
+        }))
+      }
+    },
+    [heroesState, heroes, container]
+  )
 
   const navigate = useNavigate()
   const handleSelectHero = (id: number | undefined) => {
@@ -51,5 +83,9 @@ export function useGetHeroes() {
     getAllHeroes()
   }, [])
 
-  return { heroes, handleSelectHero }
+  const handleScroll = useCallback(() => {
+    getAllHeroes(heroesState.offset + heroesState.limit)
+  }, [heroesState])
+
+  return { heroes, heroesState, handleSelectHero, handleScroll }
 }
