@@ -22,3 +22,5 @@ Se deberán tener contemplado dos casos. En ellos, también se deberá mostrar u
 
 Notas
 - La versión de typescript utilizada no es la última (5.0.2) debido a que hay un problema con la librería tsyringe (también de Microsoft) por lo que todavía no es compatible. Para trabajar con inyección de dependencias es necesaria esta librería
+
+- Se ha tenido que generar una nueva API KEY en marvel api, ya que faltaba el hash para poder hacer la petición a la api
