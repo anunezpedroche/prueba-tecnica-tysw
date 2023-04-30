@@ -1,10 +1,12 @@
 import "./App.css"
-import { useGetHeros } from "./ui/hooks/useGetHeros"
+import { HerosList } from "./ui/pages/HerosList"
 
 function App() {
-  const heros = useGetHeros()
-
-  return <></>
+  return (
+    <>
+      <HerosList />
+    </>
+  )
 }
 
 export default App

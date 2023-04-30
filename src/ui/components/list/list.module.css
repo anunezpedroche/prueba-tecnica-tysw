@@ -1,0 +1,15 @@
+.listContainer{
+    list-style: none;
+    display: flex;
+    padding:0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin:0;
+}
+
+.listItem{
+    display: flex;
+    align-items: flex-start;
+    justify-content:flex-start;
+}

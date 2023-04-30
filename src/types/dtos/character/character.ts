@@ -3,6 +3,7 @@ import { URL } from "../common/url"
 import { EventsList } from "../events/events-list"
 import { SeriesList } from "../series/series-list"
 import { StoryList } from "../stories/story-list"
+import { Thumbnail } from "./thumbnail"
 
 export type Character = {
   id?: number
@@ -11,7 +12,7 @@ export type Character = {
   modified?: Date
   resourceURI?: string
   urls?: URL[]
-  thumbnail?: string
+  thumbnail?: Thumbnail
   comics?: ComicList
   stories?: StoryList
   events?: EventsList

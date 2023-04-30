@@ -26,7 +26,7 @@ export class FindEntityHttpRepository<T, Tdto, K extends QueryParams<T>>
 
       return new Result<T>({
         status: status,
-        data: mapTo(response.data as Tdto) as T,
+        data: mapTo(response as Tdto) as T,
         succeeded: true
       })
     } catch (e) {
