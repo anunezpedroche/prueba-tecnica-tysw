@@ -1,7 +1,16 @@
+import { MouseEventHandler } from "react"
 import listStyles from "./list.module.css"
 
-export function ListItem({ children }: { children: React.ReactNode | string }) {
-  return <li className={listStyles.listItem}>
-    {children}
-  </li>
+export function ListItem({
+  children,
+  onClick
+}: {
+  children: React.ReactNode | string
+  onClick: MouseEventHandler<HTMLLIElement>
+}) {
+  return (
+    <li className={listStyles.listItem} onClick={onClick}>
+      {children}
+    </li>
+  )
 }

@@ -1,10 +1,10 @@
 import "./App.css"
-import { HerosList } from "./ui/pages/HerosList"
+import { AppRoutes } from "./ui/routes"
 
 function App() {
   return (
     <>
-      <HerosList />
+      <AppRoutes />
     </>
   )
 }
