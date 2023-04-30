@@ -1,0 +1,2 @@
+export const HTTP_CLIENT: symbol = Symbol("HTTP_CLIENT")
+export const FIND_ENTITY_HTTP_REPOSITORY = Symbol("FIND_ENTITY_HTTP_REPOSITORY")
