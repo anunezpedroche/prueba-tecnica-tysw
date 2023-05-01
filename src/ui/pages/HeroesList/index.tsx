@@ -4,7 +4,7 @@ import { useGetHeroes } from "../../hooks/useGetHeroes"
 import { useNearScreen } from "../../hooks/useNearScreen"
 import { MutableRefObject, useEffect, useRef } from "react"
 import { Image } from "../../components/image/image"
-import heroesListStyle from "./heroes-list.module.css"
+import "./heroes-list.css"
 
 export function HeroesList() {
   const ref = useRef<HTMLLIElement>()
@@ -12,7 +12,7 @@ export function HeroesList() {
   const { heroes, heroesState, handleSelectHero, handleScroll } = useGetHeroes()
 
   const isReferenceInScreen =
-    heroesState.loading !== false && heroesState.apiError === false
+    heroesState.loading === false && heroesState.apiError === false
 
   const { isNearScreen } = useNearScreen<HTMLLIElement>({
     once: false,
@@ -48,7 +48,7 @@ export function HeroesList() {
               onClick={() => {
                 handleSelectHero(hero.id)
               }}
-              styles={heroesListStyle["hero-list"]}
+              styles={"hero-list"}
             >
               {hero.name}
               <Image

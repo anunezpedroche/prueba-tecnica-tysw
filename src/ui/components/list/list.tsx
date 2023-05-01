@@ -1,5 +1,5 @@
-import listStyles from "./list.module.css"
+import "./list.css"
 
 export function List({ children }: { children: React.ReactNode }) {
-  return <ul className={listStyles.listContainer}>{children}</ul>
+  return <ul className={'listContainer'}>{children}</ul>
 }

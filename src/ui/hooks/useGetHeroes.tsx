@@ -65,7 +65,7 @@ export function useGetHeroes() {
       const heros = await getEntityUseCase<
         GetHeroes,
         CharacterDataWrapper,
-        any
+        { url: string }
       >(
         container,
         {

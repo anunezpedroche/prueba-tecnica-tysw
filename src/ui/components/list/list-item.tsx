@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react"
-import listStyles from "./list.module.css"
+import "./list.css"
 
 export function ListItem({
   children,
@@ -11,7 +11,7 @@ export function ListItem({
   styles?: string
 }) {
   return (
-    <li className={`${listStyles.listItem} ${styles}`} onClick={onClick}>
+    <li className={`listItem ${styles}`} onClick={onClick}>
       {children}
     </li>
   )

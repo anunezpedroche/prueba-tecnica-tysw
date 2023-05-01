@@ -1,10 +1,9 @@
-import { Character } from "../../../types/dtos/character/character"
 import { ComicsSummary } from "../../../types/dtos/comics/comics-summary"
 import { Image } from "../../components/image/image"
 import { List } from "../../components/list/list"
 import { ListItem } from "../../components/list/list-item"
 import { useHeroesStore } from "../../store/heroes-store"
-import heroesDetailStyle from "./heroes-detail.module.css"
+import "./heroes-detail.css"
 
 export function HeroesDetail() {
   const [selectedHero] = useHeroesStore((state) => [state.selectedHero])
@@ -47,7 +46,7 @@ export function HeroesDetail() {
               return (
                 <ListItem
                   key={crypto.randomUUID()}
-                  styles={heroesDetailStyle["tiny-list"]}
+                  styles={"tiny-list"}
                 >
                   <span>{comic.name}</span>
                 </ListItem>
