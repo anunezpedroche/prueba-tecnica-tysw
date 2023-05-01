@@ -1,5 +1,7 @@
 # Prueba técnica Tyris SW
 
+Ejecutar `npm run dev` para lanzar el servidor de desarrollo, o `npm run test` para lanzar los test
+
 ## Información inicial
 El ejercicio consistirá en cargar una lista de personajes. Como mínimo el listado deberá mostrar el nombre de cada personaje.
 
@@ -41,4 +43,4 @@ Para manejar el estado global de la aplicación se ha optado por una opción sen
 
 - Como no era especificación importante el estilo de la aplicación en un primer lugar se intentó trabajar con CSS Modules, esto me dió algunos problemas a la hora de testear, así que se volvió a unas hojas css y pasando el className correspondiente a cada una o estilando directamente sobre el elemento html. En otras circunstancias podría sugerir el uso de Styled-Components o TailwindCSS dependiendo de las necesidades.
 
--Existe un pequeño problema cuando se encuentra en la vista de detalle, si se recarga la página en esa vista, los datos mostrados se perderán (la aplicación vuelve a renderizarse entera y en este punto no existen datos). Las soluciones pueden pasar por añadir persistencia de datos para seguir sin realizar una llamada extra a la API, dependiendo de las necesidades del proyecto. Sin la persistencia se podría recuperar el {idHero} de la ruta del navegador y hacer una petición a la API.
+- Existe un pequeño problema cuando se encuentra en la vista de detalle, si se recarga la página en esa vista, los datos mostrados se perderán (la aplicación vuelve a renderizarse entera y en este punto no existen datos). Las soluciones pueden pasar por añadir persistencia de datos para seguir sin realizar una llamada extra a la API, dependiendo de las necesidades del proyecto. Sin la persistencia se podría recuperar el {idHero} de la ruta del navegador y hacer una petición a la API.
