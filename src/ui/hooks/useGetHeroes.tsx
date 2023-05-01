@@ -5,6 +5,20 @@ import { Character } from "../../types/dtos/character/character"
 import { useHeroesStore } from "../store/heroes-store"
 import { useNavigate } from "react-router-dom"
 
+interface GetHeroesStateProps {
+  count: number
+  limit: number
+  offset: number
+  total: number
+  loading: boolean
+  apiError: boolean
+}
+
+type GetHeroes = {
+  heroes: Character[]
+  heroesState: GetHeroesStateProps
+}
+
 export function useGetHeroes() {
   const [heroes, addHeroes, selectHero, container] = useHeroesStore((state) => [
     state.heroes,
@@ -13,22 +27,31 @@ export function useGetHeroes() {
     state.container
   ])
 
-  const [heroesState, setHeroesState] = useState({
+  const [heroesState, setHeroesState] = useState<GetHeroesStateProps>({
     count: 20,
     limit: 20,
-    offset: 20,
-    total: 20,
-    loading: true,
+    offset: heroes.length - 20,
+    total: heroes.length + 1,
+    loading: heroes.length === 0 ? true : false,
     apiError: false
   })
 
-  const mapTo = useCallback((data: CharacterDataWrapper) => {
-    return data
+  const mapTo = useCallback((data: CharacterDataWrapper): GetHeroes => {
+    return {
+      heroes: data.data?.results ?? [],
+      heroesState: {
+        apiError: data.code !== 200,
+        count: data.data?.count ?? 20,
+        limit: data.data?.limit ?? 20,
+        loading: data.code !== 200,
+        offset: data.data?.offset ?? 0,
+        total: data.data?.total ?? 0
+      }
+    }
   }, [])
 
   const getAllHeroes = useCallback(
     async (offset?: number) => {
-      console.log(offset, heroesState.loading)
       if (heroes.length >= heroesState.total) return
 
       let url = `/characters?ts=1000&apikey=${
@@ -40,7 +63,7 @@ export function useGetHeroes() {
       }
 
       const heros = await getEntityUseCase<
-        CharacterDataWrapper,
+        GetHeroes,
         CharacterDataWrapper,
         any
       >(
@@ -51,15 +74,10 @@ export function useGetHeroes() {
         mapTo
       )
       if (heros.status === 200) {
-        addHeroes(heros.data?.data?.results as Character[])
+        addHeroes(heros.data?.heroes ?? [])
         setHeroesState((prev) => ({
           ...prev,
-          loading: false,
-          apiError: false,
-          count: heros.data?.data?.count as number,
-          limit: heros.data?.data?.limit as number,
-          offset: heros.data?.data?.offset as number,
-          total: heros.data?.data?.total as number
+          ...heros.data?.heroesState
         }))
       }
       if (heros.status !== 200) {
@@ -80,6 +98,7 @@ export function useGetHeroes() {
     navigate(`/hero/${id}`)
   }
   useEffect(() => {
+    if (heroes.length !== 0) return
     getAllHeroes()
   }, [])
 

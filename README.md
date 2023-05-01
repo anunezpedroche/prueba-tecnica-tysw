@@ -29,3 +29,4 @@ Notas
     - Utilizar un context con un state o un reducer provocaría un renderizado de todo componente hijo en el árbol de componentes, siendo una solución ineficiente en una aplicación que pueda crecer.
     - Después de estudiar que la api devuelve la misma información en la petición de devolver todos los carácteres que en la de un sólo héroe, me ha parecido que podría ahorrar peticiones a la API introduciendo un estado global para la app.
     - Es una librería ligera y ofrece una solución más sencilla de implementar que Redux o similares.
+    - Esto tiene un problema de funcionamiento que puede solucionarse añadiendo persistencia de datos en la aplicación. Al recargar una página de detalle de héroe, al no tener una petición específica de detalle, llegaría vacía. La solución puede pasar por hacer una llamada a la api si no hay datos, o añadir persistencia en zustand.

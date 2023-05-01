@@ -1,16 +1,22 @@
-import { useNavigate } from "react-router-dom"
 import { List } from "../../components/list/list"
 import { ListItem } from "../../components/list/list-item"
 import { useGetHeroes } from "../../hooks/useGetHeroes"
 import { useNearScreen } from "../../hooks/useNearScreen"
 import { MutableRefObject, useEffect, useRef } from "react"
+import { Image } from "../../components/image/image"
+import heroesListStyle from "./heroes-list.module.css"
 
 export function HeroesList() {
+  const ref = useRef<HTMLLIElement>()
+
   const { heroes, heroesState, handleSelectHero, handleScroll } = useGetHeroes()
-  const ref = useRef<HTMLLIElement>({} as HTMLLIElement)
+
+  const isReferenceInScreen =
+    heroesState.loading !== false && heroesState.apiError === false
+
   const { isNearScreen } = useNearScreen<HTMLLIElement>({
     once: false,
-    externalRef: !heroesState.loading ? ref : undefined
+    externalRef: isReferenceInScreen ? ref : undefined
   })
 
   useEffect(() => {
@@ -23,7 +29,7 @@ export function HeroesList() {
     return <>Loading...</>
   }
 
-  if (heroes.length === 0) {
+  if (heroes.length === 0 && !heroesState.apiError) {
     return <>No hay datos</>
   }
 
@@ -32,7 +38,7 @@ export function HeroesList() {
   }
 
   return (
-    <>
+    <main>
       <List>
         {heroes?.map((hero) => {
           let uri = `${hero.thumbnail?.path}.${hero.thumbnail?.extension}`
@@ -42,18 +48,29 @@ export function HeroesList() {
               onClick={() => {
                 handleSelectHero(hero.id)
               }}
+              styles={heroesListStyle["hero-list"]}
             >
               {hero.name}
-              <img style={{ width: "20vw" }} src={uri} />
+              <Image
+                style={{ width: "20vw" }}
+                uri={uri}
+                alt={hero.name ?? "Undefined hero"}
+              />
             </ListItem>
           )
         })}
-        <li id="visor" style={{ height: "1px" }} ref={ref}>
-          {heroes.length !== heroesState.total
-            ? "Cargando más..."
-            : "No hay más datos"}
-        </li>
+        {isReferenceInScreen && (
+          <li
+            id="visor"
+            style={{ height: "1px" }}
+            ref={ref as MutableRefObject<HTMLLIElement>}
+          >
+            {heroes.length !== heroesState.total
+              ? "Cargando más..."
+              : "No hay más datos"}
+          </li>
+        )}
       </List>
-    </>
+    </main>
   )
 }

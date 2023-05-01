@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useRef, useState } from "react"
 
 interface IUseNearScreen<T> {
   distance?: string
-  externalRef?: React.MutableRefObject<T>
+  externalRef?: React.MutableRefObject<T | undefined>
   once?: boolean
 }
 
@@ -12,10 +12,10 @@ export function useNearScreen<T>({
   once = true
 }: IUseNearScreen<T>) {
   const [isNearScreen, setShow] = useState<boolean>(false)
-  const fromRef = useRef<MutableRefObject<T>>()
+  const fromRef = useRef<MutableRefObject<T | undefined>>()
 
   useEffect(() => {
-    if (!externalRef) return
+    if (externalRef?.current === undefined) return
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -34,29 +34,6 @@ export function useNearScreen<T>({
 
     return () => observer.disconnect()
   }, [externalRef, once])
-
-  // useEffect(() => {
-  //   const element: HTMLElement = externalRef
-  //     ? externalRef.current000
-  //     : fromRef.current
-  //   // const element = document.getElementById("visor")
-  //   const onChange = (entries, observer) => {
-  //     const el = entries[0]
-  //     if (el.isIntersecting) {
-  //       setShow(true)
-  //       once && observer.disconnect()
-  //     } else {
-  //       !once && setShow(false)
-  //     }
-  //   }
-
-  //   let observer = new IntersectionObserver(onChange, { rootMargin: "10px" })
-
-  //   if (element !== undefined && element !== null) {
-  //     observer.observe(element)
-  //   }
-  //   return () => observer && observer.disconnect()
-  // })
 
   return { isNearScreen, fromRef }
 }

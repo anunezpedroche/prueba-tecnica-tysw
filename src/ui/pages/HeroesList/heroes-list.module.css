@@ -1,0 +1,7 @@
+.hero-list{
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 550;
+    width: fit-content;
+}
